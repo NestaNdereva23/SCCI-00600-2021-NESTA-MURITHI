@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2024 at 03:00 PM
+-- Generation Time: Jul 05, 2024 at 09:16 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,14 +32,21 @@ CREATE TABLE `directors` (
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `d.o.b` date NOT NULL,
-  `photo` varchar(100) NOT NULL,
+  `photo` varchar(100) DEFAULT NULL,
   `nationalityid` int(11) NOT NULL,
-  `addedby` int(11) NOT NULL,
-  `deleted` tinyint(1) NOT NULL DEFAULT 0,
-  `datedeleted` date NOT NULL,
-  `deletedby` int(11) NOT NULL,
-  `dateadded` date NOT NULL
+  `addedby` int(11) DEFAULT NULL,
+  `deleted` tinyint(1) DEFAULT 0,
+  `datedeleted` date DEFAULT NULL,
+  `deletedby` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `directors`
+--
+
+INSERT INTO `directors` (`directorid`, `firstname`, `lastname`, `d.o.b`, `photo`, `nationalityid`, `addedby`, `deleted`, `datedeleted`, `deletedby`) VALUES
+(2, 'Michael', 'Sankorski', '1970-07-03', NULL, 1, NULL, 0, NULL, NULL),
+(3, 'George ', 'Miller', '1980-07-03', NULL, 1, 1, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -123,12 +130,20 @@ CREATE TABLE `movies` (
   `releasedate` date NOT NULL,
   `runningtime` time NOT NULL,
   `synopsis` varchar(100) NOT NULL,
-  `cover` varchar(50) NOT NULL,
+  `cover` varchar(200) NOT NULL,
   `dateadded` datetime NOT NULL,
   `addedby` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `directorid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `movies`
+--
+
+INSERT INTO `movies` (`movieid`, `title`, `releasedate`, `runningtime`, `synopsis`, `cover`, `dateadded`, `addedby`, `userid`, `directorid`) VALUES
+(2, 'A Quiet Place: Day One ', '2024-06-28', '01:40:00', 'Grounded in raw humanity by Lupita Nyong\'o and Joseph Quinn, this sideways entry into A Quiet Place ', 'https://resizing.flixster.com/GXxKUWvX420RloS4ePC7', '2024-06-28 08:55:31', 1, 1, 2),
+(3, 'Furiosa: A Mad Max Saga', '2024-05-24', '02:28:00', 'Snatched from the Green Place of Many Mothers, young Furiosa falls into the hands of a great biker h', 'https://resizing.flixster.com/N45U3_rLA828NNgDZOBK', '2024-06-26 10:02:47', 1, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -138,8 +153,16 @@ CREATE TABLE `movies` (
 
 CREATE TABLE `nationalities` (
   `nationalityid` int(11) NOT NULL,
-  `nationname` int(11) NOT NULL
+  `nationname` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `nationalities`
+--
+
+INSERT INTO `nationalities` (`nationalityid`, `nationname`) VALUES
+(1, 'USA'),
+(2, 'CANADA');
 
 -- --------------------------------------------------------
 
@@ -209,6 +232,14 @@ CREATE TABLE `users` (
   `mobile` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`userid`, `username`, `firstname`, `lastname`, `password`, `salt`, `systemadmin`, `accountactive`, `dateadded`, `addedby`, `mobile`, `email`) VALUES
+(1, 'Mal', 'Mike', 'Leeky', 'LeekyMike', '', 1, 1, '2024-07-05 08:40:00', 1, '0722222222', 'leeky@gmail.com'),
+(2, 'Ash', 'Ashley', 'Leiton', 'LeitonAshley', '', 1, 1, '2024-06-01 09:42:54', 1, '0722222223', 'ash@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -314,7 +345,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `directors`
 --
 ALTER TABLE `directors`
-  MODIFY `directorid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `directorid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `languages`
@@ -344,13 +375,13 @@ ALTER TABLE `movieratings`
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `movieid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `movieid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `nationalities`
 --
 ALTER TABLE `nationalities`
-  MODIFY `nationalityid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `nationalityid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ratings`
@@ -374,7 +405,7 @@ ALTER TABLE `stars`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
